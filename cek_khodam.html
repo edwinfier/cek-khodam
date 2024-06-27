@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KODAM KONSUL</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2d2f31;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      justify-content: center;
+    }
+
+    .container {
+      background-color: #2d2c2c;
+      padding: 20px 50px;
+      width: 500px;
+      text-align: center;
+      border-radius: 101px 24px 102px 24px;
+      -webkit-border-radius: 101px 24px 102px 24px;
+      -moz-border-radius: 101px 24px 102px 24px;
+      box-shadow: -11px -7px 165px 21px rgba(16, 181, 112, 0.75);
+      -webkit-box-shadow: -11px -7px 165px 21px rgba(16, 181, 112, 0.75);
+      -moz-box-shadow: -11px -7px 165px 21px rgba(16, 181, 112, 0.75);
+    }
+
+    h1,
+    h2 {
+      color: #faf9f9;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      text-align: left;
+      color: #f7f7f7;
+    }
+
+    input {
+      padding: 10px 0;
+      margin-bottom: 15px;
+      border: none;
+      border-bottom: 1px solid #ccc !important;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      color: #09c09c;
+      background: transparent;
+    }
+    input:hover {
+      border: none;
+    }
+
+    button {
+      padding: 10px;
+      background-color: transparent;
+      color: #009879;
+      border: 1px solid #009879;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.5s;
+    }
+
+    button:hover {
+      background-color: #076e5a;
+      color: #fff;
+      border: none;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #f6f4f4;
+    }
+    .scroll-result {
+      height: 180px;
+      overflow-y: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 14px;
+    }
+    .content-table thead {
+      color: #ffff;
+      background-color: #009879;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+    }
+    .content-table thead th {
+      font-weight: normal;
+    }
+    /* .content-table tbody tr:nth-of-type(even) {
+      background-color: #ddd;
+      color: #2d2c2c;
+    } */
+    th,
+    tr,
+    td {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+      border-bottom: 0.5px solid #ddd !important;
+      border: none;
+    }
+    .btn-hapus {
+      font-size: 14px;
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 4px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn-hapus:hover {
+      background-color: #c82333;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Cek Khodam Anda</h1>
+      <form id="khodamForm">
+        <label for="name">Nama:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Masukkin namanya"
+          autocomplete="off"
+          required
+        />
+        <button type="submit">CEK DULU GA SIHH</button>
+      </form>
+      <div id="result">
+        <h2>Ini Khodam Lo</h2>
+        <div class="scroll-result">
+          <table id="resultTable" class="content-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Nama Khodam</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Hasil akan ditambahkan di sini -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+  <script>
+    document
+      .getElementById("khodamForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault(); // Mencegah form dari reload halaman
+
+        // Ambil nilai input nama
+        const name = document.getElementById("name").value.trim();
+
+        // Validasi input nama
+        if (!validateName(name)) {
+          alert("Silakan masukkan nama yang valid.");
+          return;
+        }
+
+        // Lakukan logika cek khodam
+        const khodam = cekKhodam(name);
+        addResultToTable(name, khodam);
+
+        document.getElementById("khodamForm").reset();
+      });
+
+    function validateName(name) {
+      // Pastikan nama tidak kosong dan hanya berisi huruf
+      const regex = /^[a-zA-Z\s]+$/;
+      return name.length > 0 && regex.test(name);
+    }
+
+    function cekKhodam(name) {
+      // Contoh logika sederhana berdasarkan nama
+      const khodams = [
+        "Warteg",
+        "Kosong",
+        "Doraemon",
+        "Hello Kitty",
+        "Sinchan",
+        "Kebo Merah",
+        "Kosong",
+        "Es Mengkudu",
+        "Pohon Salak",
+        "Pagar Beton",
+        "Rumah Rubuh",
+        "Sate Madura",
+        "Bakso Urat",
+        "Jin Terjebak",
+        "Nasi Bungkus",
+        "Roti Bakar",
+        "Martabak Manis",
+        "Kosong",
+        "Ayam Geprek",
+        "Nasi Kucing",
+        "Teh Poci",
+        "Cilok Kuah",
+        "Kerak Telor",
+        "Mie Goreng",
+        "Susu Jahe",
+        "Pisang Goreng",
+        "Cendol Dawet",
+        "Es Doger",
+        "Kang Bubur",
+        "Lontong Sayur",
+        "Kosong",
+        "Pisang Keju",
+        "Bubur Ayam",
+        "Kucing Liar",
+        "Anak Layangan",
+        "Jin Ganteng",
+        "Pahlawan Kesiangan",
+        "Bambu Runcing",
+        "Kereta Mini",
+        "Sepeda Onthel",
+        "Lampu Teplok",
+        "Peri Tempe",
+        "Jendela Rusak",
+        "Pintu Gebuk",
+        "Jalan Tikus",
+        "Sepatu Roda",
+        "Mobil Tua",
+        "Kursi Goyang",
+        "Meja Bundar",
+        "Kipas Angin",
+        "Mangga Hijau",
+        "Durian Montong",
+        "Jambu Air",
+        "Petai Rebus",
+        "Lauk Pauk",
+        "Mie Ayam",
+        "Peri Gorengan",
+        "Roti Kukus",
+        "Es Kacang Merah",
+        "Peri Kentang",
+        "Poci Teh",
+        "Burung Kenari",
+        "Lilin Bakar",
+        "Batu Kali",
+        "Jendela Pecah",
+        "Sepatu Hilang",
+        "Sarung Hantu",
+        "Jaket Hujan",
+        "Kompor Gas",
+        "Panci Bolong",
+        "Cangkir Kopi",
+        "Kopi Tubruk",
+        "Aqua Gelas",
+        "Pocong Lucu",
+        "Ninja Kodok",
+        "Kucing Mencuri",
+        "Ikan Paus Kecil",
+        "Bebek Ngambek",
+        "Gajah Pikul",
+        "Kuda Sembrani",
+        "Kucing Anggora",
+        "Peri Lemon",
+        "Es Jeruk",
+        "Bebek Goreng",
+        "Sop Buntut",
+        "Kucing Hitam",
+        "Kelinci Guling",
+        "Kura-Kura Ninja",
+        "Peri Tidur",
+        "Kelelawar Kecil",
+        "Bantal Ajaib",
+        "Lampu Pijar",
+        "Kursi Berderak",
+        "Guling Nyaman",
+        "Selimut Hangat",
+        "Rantai Sepeda",
+        "Topi Jerami",
+        "Baju Keren",
+        "Tas Ransel",
+        "Payung Polkadot",
+        "Kaos Kaki Sobek",
+      ];
+
+      // Lebih banyak logika yang bisa ditambahkan di sini sesuai kebutuhan
+      const totalCharValue = calculateNameValue(name);
+      const index = totalCharValue % khodams.length; // Menggunakan nilai nama untuk menentukan khodam
+      return khodams[index];
+    }
+
+    function calculateNameValue(name) {
+      // Menghitung nilai nama berdasarkan jumlah karakter
+      let value = 0;
+      for (let char of name) {
+        value += char.toLowerCase().charCodeAt(0) - 96; // a=1, b=2, ..., z=26
+      }
+      return value;
+    }
+
+    function addResultToTable(name, khodam) {
+      const table = document
+        .getElementById("resultTable")
+        .querySelector("tbody");
+      const rowCount = table.rows.length + 1;
+      const row = table.insertRow();
+
+      row.insertCell(0).textContent = rowCount;
+      row.insertCell(1).textContent = name;
+      row.insertCell(2).textContent = khodam;
+
+      // Tambahkan tombol hapus
+      const deleteCell = row.insertCell(3);
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Hapus";
+      deleteButton.classList.add("btn-hapus");
+      deleteButton.addEventListener("click", function () {
+        row.remove();
+        updateRowNumbers();
+      });
+      deleteCell.appendChild(deleteButton);
+    }
+
+    function updateRowNumbers() {
+      const table = document
+        .getElementById("resultTable")
+        .querySelector("tbody");
+      for (let i = 0; i < table.rows.length; i++) {
+        table.rows[i].cells[0].textContent = i + 1;
+      }
+    }
+  </script>
+</html>
